@@ -18,6 +18,9 @@
 </p>
 
 
+![](https://user-images.githubusercontent.com/89656488/200188930-75c98bf7-f01e-4c85-abb1-d5fdddad8585.gif)
+
+
 # Event-Planning-Application
 
 
