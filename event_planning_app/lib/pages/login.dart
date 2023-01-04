@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:event_planning_app/widgets/widgets.dart';
 import 'package:event_planning_app/constants/constants.dart';
+import 'package:event_planning_app/services/authServices.dart';
+import 'package:event_planning_app/services/databaseService.dart';
+import 'package:event_planning_app/helper/helperFunctions.dart';
+import 'package:event_planning_app/pages/home.dart';
+import 'package:event_planning_app/pages/register.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,7 +22,7 @@ class _LoginState extends State<Login> {
   String email = "";
   String password = "";
   bool _isLoading = false;
-  //AuthService authService = AuthService();
+  AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +133,7 @@ class _LoginState extends State<Login> {
                                 TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                           onPressed: () {
-                            //login();
+                            login();
                           },
                         ),
                       ),
@@ -147,7 +154,7 @@ class _LoginState extends State<Login> {
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    //nextScreen(context, const Register());
+                                    nextScreen(context, const Register());
                                   }),
                           ])),
                     ],
@@ -158,30 +165,30 @@ class _LoginState extends State<Login> {
     );
   }
 
-  // login() async {
-  //   if (formKey.currentState!.validate()) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     await authService
-  //         .loginWithUserEmailandPassword(email, password)
-  //         .then((value) async {
-  //       if (value == true) {
-  //         QuerySnapshot snapshot =
-  //             await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-  //                 .getUserData(email);
-  //         // saving value to shared preferences
-  //         await HelperFunctions.savedUserLoggedInStatus(true);
-  //         await HelperFunctions.savedUserNameSF(snapshot.docs[0]['fullName']);
-  //         await HelperFunctions.savedUserEmailSF(email);
-  //         nextScreenReplace(context, Home());
-  //       } else {
-  //         setState(() {
-  //           showSnackBar(context, Colors.red, value);
-  //           _isLoading = false;
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+  login() async {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      await authService
+          .loginWithUserEmailandPassword(email, password)
+          .then((value) async {
+        if (value == true) {
+          QuerySnapshot snapshot =
+              await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+                  .getUserData(email);
+          // saving value to shared preferences
+          await HelperFunctions.savedUserLoggedInStatus(true);
+          await HelperFunctions.savedUserNameSF(snapshot.docs[0]['fullName']);
+          await HelperFunctions.savedUserEmailSF(email);
+          nextScreenReplace(context, Home());
+        } else {
+          setState(() {
+            showSnackBar(context, Colors.red, value);
+            _isLoading = false;
+          });
+        }
+      });
+    }
+  }
 }

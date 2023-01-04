@@ -13,10 +13,10 @@ Color cyanColor = Color(0xFF6D7E6E);
 const kAnimationDuration = Duration(milliseconds: 200);
 
 class Constants {
-  static String appId = "1:696106708622:web:2c9887df6f1ecc3e00a3df";
-  static String apiKey = "AIzaSyBClkTXNzeKK20XhhsIdTZMYAGruqfo6Mo";
-  static String messagingSenderId = "696106708622";
-  static String projectId = "chatapp-5b417";
+  static String appId = "1:294793366462:web:5b7b5503cecaf4db48c7ef";
+  static String apiKey = "AIzaSyBmtbxkx8xCX5LstGxw79vkk2nevX3Kj90";
+  static String messagingSenderId = "294793366462";
+  static String projectId = "event-planning-application";
 
   static const primaryColor = Color.fromARGB(255, 137, 44, 220);
 }

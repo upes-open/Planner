@@ -1,6 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
+import 'package:event_planning_app/services/authServices.dart';
+import 'package:event_planning_app/helper/helperFunctions.dart';
+import 'package:event_planning_app/constants/constants.dart';
+import 'package:event_planning_app/pages/home.dart';
+import 'package:event_planning_app/pages/login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -15,7 +20,7 @@ class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
   String fullName = "";
-  //AuthService authService = AuthService();
+  AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +155,7 @@ class _RegisterState extends State<Register> {
                                 TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                           onPressed: () {
-                            //register();
+                            register();
                           },
                         ),
                       ),
@@ -171,7 +176,7 @@ class _RegisterState extends State<Register> {
                                     decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    //nextScreen(context, const Login());
+                                    nextScreen(context, const Login());
                                   }),
                           ])),
                     ],
@@ -182,26 +187,26 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // register() async {
-  //   if (formKey.currentState!.validate()) {
-  //     setState(() {
-  //       _isLoading = true;
-  //     });
-  //     await authService
-  //         .registerUserWithEmailandPassword(fullName, email, password)
-  //         .then((value) async {
-  //       if (value == true) {
-  //         await HelperFunctions.savedUserLoggedInStatus(true);
-  //         await HelperFunctions.savedUserNameSF(fullName);
-  //         await HelperFunctions.savedUserEmailSF(email);
-  //         nextScreenReplace(context, Home());
-  //       } else {
-  //         setState(() {
-  //           showSnackBar(context, Colors.red, value);
-  //           _isLoading = false;
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+  register() async {
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+      await authService
+          .registerUserWithEmailandPassword(fullName, email, password)
+          .then((value) async {
+        if (value == true) {
+          await HelperFunctions.savedUserLoggedInStatus(true);
+          await HelperFunctions.savedUserNameSF(fullName);
+          await HelperFunctions.savedUserEmailSF(email);
+          nextScreenReplace(context, Home());
+        } else {
+          setState(() {
+            showSnackBar(context, Colors.red, value);
+            _isLoading = false;
+          });
+        }
+      });
+    }
+  }
 }
