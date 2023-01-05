@@ -1,60 +1,26 @@
-import 'package:event_planning_app/constants/constants.dart';
-import 'package:event_planning_app/pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:event_planning_app/pages/home.dart';
-import 'package:event_planning_app/pages/onBoard.dart';
-import 'package:event_planning_app/helper/helperFunctions.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:event_planning_app/service/calender.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+//void main() {
+//  runApp(MyApp());
+//}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: Constants.apiKey,
-            appId: Constants.appId,
-            messagingSenderId: Constants.messagingSenderId,
-            projectId: Constants.projectId));
-  } else {
-    await Firebase.initializeApp();
-  }
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool _isSignedIn = false;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getUserLoggedInStatus();
-  }
-
-  getUserLoggedInStatus() async {
-    await HelperFunctions.getUserLoggedInStatus().then((value) {
-      setState(() {
-        _isSignedIn = value!;
-      });
-    });
-  }
-
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Event Planning App',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Constants.primaryColor,
+        primarySwatch: Colors.brown,
       ),
-      home: _isSignedIn ? const Home() : const Login(),
+      //home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home : const Calender(),
     );
   }
 }
