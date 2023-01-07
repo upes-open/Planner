@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:event_planning_app/service/calender.dart';
+import '../screens/addevent.dart';
+import '../service/googlecalendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class WeekCalender extends StatefulWidget {
   const WeekCalender({Key? key}) : super(key: key);
@@ -58,7 +60,29 @@ class _WeekCalendarState extends State<WeekCalender> {
         body: Container(
             child: SfCalendar(
           view: CalendarView.week,
-        )));
+        )),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
+          children: [
+            SpeedDialChild(
+              backgroundColor: Colors.brown,
+              child: Icon(Icons.task, color: Colors.white),
+              label: 'Event',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => addevent()),
+                );
+              },
+            ),
+            SpeedDialChild(
+              backgroundColor: Colors.brown,
+              child: Icon(Icons.pin_drop_rounded, color: Colors.white),
+              label: 'Tag',
+            )
+          ],
+        ));
   }
 }
 
@@ -119,6 +143,28 @@ class _MonthCalendarState extends State<MonthCalender> {
             child: SfCalendar(
           view: CalendarView.month,
           monthViewSettings: MonthViewSettings(showAgenda: true),
-        )));
+        )),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: SpeedDial(
+          animatedIcon: AnimatedIcons.add_event,
+          children: [
+            SpeedDialChild(
+              backgroundColor: Colors.brown,
+              child: Icon(Icons.task, color: Colors.white),
+              label: 'Event',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => addevent()),
+                );
+              },
+            ),
+            SpeedDialChild(
+              backgroundColor: Colors.brown,
+              child: Icon(Icons.pin_drop_rounded, color: Colors.white),
+              label: 'Tag',
+            )
+          ],
+        ));
   }
 }
