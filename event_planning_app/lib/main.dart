@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:event_planning_app/service/calender.dart';
+import 'package:event_planning_app/service/googlecalendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 //void main() {
