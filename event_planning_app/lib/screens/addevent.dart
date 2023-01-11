@@ -2,7 +2,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:googleapis/mybusinessverifications/v1.dart';
 import 'package:googleapis/streetviewpublish/v1.dart';
-import '../service/calendarevent.dart';
+import '../services/calendarevent.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class addevent extends StatefulWidget {
@@ -76,7 +76,7 @@ class _addevent extends State<addevent> {
                   'Event Start Time',
                   style: TextStyle(color: Colors.brown, fontSize: 30),
                 )),
-            Text('$startTime',style: TextStyle(fontSize: 30)),
+            Text('$startTime', style: TextStyle(fontSize: 30)),
           ],
         ),
         Row(
@@ -96,9 +96,9 @@ class _addevent extends State<addevent> {
                 },
                 child: Text(
                   'Event End Time',
-                  style: TextStyle(color: Colors.brown,fontSize: 30),
+                  style: TextStyle(color: Colors.brown, fontSize: 30),
                 )),
-            Text('$endTime',style: TextStyle(fontSize: 30)),
+            Text('$endTime', style: TextStyle(fontSize: 30)),
           ],
         ),
       ])),

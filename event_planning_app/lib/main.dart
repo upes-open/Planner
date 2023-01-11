@@ -1,26 +1,60 @@
+import 'package:event_planning_app/constants/constants.dart';
+import 'package:event_planning_app/screens/login.dart';
 import 'package:flutter/material.dart';
-import 'package:event_planning_app/service/googlecalendar.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:flutter/foundation.dart';
+import 'package:event_planning_app/screens/home.dart';
+//import 'package:event_planning_app/screens/onBoard.dart';
+import 'package:event_planning_app/helper/helperFunctions.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-//void main() {
-//  runApp(MyApp());
-//}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: Constants.apiKey,
+            appId: Constants.appId,
+            messagingSenderId: Constants.messagingSenderId,
+            projectId: Constants.projectId));
+  } else {
+    await Firebase.initializeApp();
+  }
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _isSignedIn = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserLoggedInStatus();
+  }
+
+  getUserLoggedInStatus() async {
+    await HelperFunctions.getUserLoggedInStatus().then((value) {
+      setState(() {
+        _isSignedIn = value!;
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Event Planning App',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primaryColor: Constants.primaryColor,
       ),
-      //home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home : const Calender(),
+      home: _isSignedIn ? const Home() : const Login(),
     );
   }
 }
