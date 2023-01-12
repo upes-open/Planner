@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/addevent.dart';
-import '../service/googlecalendar.dart';
+import '../services/googlecalendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
