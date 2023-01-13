@@ -172,7 +172,7 @@ class _HomeState extends State<Home> {
                         ),
                         child: IconButton(
                           onPressed: () {
-                            //_eventURL();
+                            _eventURL();
                           },
                           icon: Icon(Icons.add),
                         ),
@@ -257,7 +257,9 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: Padding(
           padding: EdgeInsets.all(15),
           child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 55, vertical: 5),
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.2,
+                vertical: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -279,9 +281,7 @@ class _HomeState extends State<Home> {
                       size: 30,
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.08,
-                  ),
+                  Spacer(),
                   IconButton(
                     onPressed: () {
                       Navigator.push(
@@ -307,9 +307,7 @@ class _HomeState extends State<Home> {
                       color: Constants.inactiveColor,
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.08,
-                  ),
+                  Spacer(),
                   IconButton(
                     onPressed: () {
                       nextScreen(
@@ -440,5 +438,195 @@ class _HomeState extends State<Home> {
             ],
           );
         });
+  }
+
+
+  _eventURL() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          elevation: 20,
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              SizedBox(height: 20),
+              Center(
+                  child: Text(
+                'Your Events',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: "Lexend",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                ),
+              )),
+              SizedBox(height: 20),
+              _buildRow('assets/images/event1.png', 'Event 1',
+                  'Description of the event'),
+              _buildRow('assets/images/event2.png', 'Event 2',
+                  'Description of the event'),
+              _buildRow('assets/images/event3.png', 'Event 3',
+                  'Description of the event'),
+              _buildRow('assets/images/general.png', 'General',
+                  'Just all unfiltered ideas'),
+              SizedBox(
+                height: 10,
+                width: 10,
+              ),
+              Container(
+                padding: EdgeInsets.all(5),
+                color: Theme.of(context).primaryColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Center(
+                            child: Text(
+                              "Add to Tags",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontFamily: "Lexend",
+                                fontWeight: FontWeight.w300,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(
+                            child: Text(
+                              "Add to Events",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Lexend",
+                                fontWeight: FontWeight.w300,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildRow(String imageAsset, String name, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
+          Container(height: 2, color: Colors.grey[100]),
+          SizedBox(height: 10),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                  // For adding into the events
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.white10,
+                  backgroundImage: AssetImage(imageAsset),
+                ),
+              ),
+              SizedBox(width: 20),
+              Container(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Text(
+                          name,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "Lexend",
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Text(
+                          subtitle,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "Lexend",
+                            fontWeight: FontWeight.w300,
+                            fontSize: 11,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              )),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  // calls the function to edit the event
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                  child: Image.asset(
+                    'assets/icons/edit.png',
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

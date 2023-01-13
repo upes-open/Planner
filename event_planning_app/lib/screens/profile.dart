@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
+import '../services/googlecalendar.dart';
+
 class Profile extends StatefulWidget {
   String userName;
   String email;
@@ -192,7 +194,9 @@ class _ProfileState extends State<Profile> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(15),
         child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 55, vertical: 5),
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.2,
+                vertical: 5),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(30),
@@ -216,20 +220,21 @@ class _ProfileState extends State<Profile> {
                     size: 30,
                   ),
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.08,
-                ),
+                Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Calender()),
+                    );
+                  },
                   icon: Icon(
                     Icons.calendar_month,
                     size: 30,
                     color: Constants.inactiveColor,
                   ),
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.08,
-                ),
+                Spacer(),
                 IconButton(
                   onPressed: () {
                     // nextScreen(
