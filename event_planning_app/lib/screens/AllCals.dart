@@ -80,6 +80,12 @@ class _WeekCalendarState extends State<WeekCalender> {
               backgroundColor: Colors.brown,
               child: Icon(Icons.pin_drop_rounded, color: Colors.white),
               label: 'Tag',
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => addTag()),
+                // );
+              },
             )
           ],
         ));
@@ -160,10 +166,10 @@ class _MonthCalendarState extends State<MonthCalender> {
               },
             ),
             SpeedDialChild(
-              backgroundColor: Colors.brown,
-              child: Icon(Icons.pin_drop_rounded, color: Colors.white),
-              label: 'Tag',
-            )
+                backgroundColor: Colors.brown,
+                child: Icon(Icons.pin_drop_rounded, color: Colors.white),
+                label: 'Tag',
+                onTap: () {})
           ],
         ));
   }
