@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:googleapis/docs/v1.dart';
 
 class DatabaseService {
   final String uid;
@@ -6,7 +7,10 @@ class DatabaseService {
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection("users");
-
+  final CollectionReference eventCollection =
+      FirebaseFirestore.instance.collection("events");
+  final DocumentReference eventDocument =
+      FirebaseFirestore.instance.collection("events").doc();
   // saving user data
   Future savingUserData(String fullName, String email, String dob) async {
     return await userCollection.doc(uid).set({
@@ -25,7 +29,19 @@ class DatabaseService {
     return snapshot;
   }
 
-//   // gettinguser groups data
+  Future saveEventDetails(
+      String eventTitle, DateTime startTime, DateTime endTime, bool isAllDay) {
+    return userCollection.doc(uid).collection("events").add({
+      "eventTitle": eventTitle,
+      "startTime": startTime,
+      "endTime": endTime,
+      "isAllDay": isAllDay,
+    });
+  }
+}
+  //get event document id
+
+//   gettinguser groups data
 //   getUserGroup() async {
 //     return userCollection.doc(uid).snapshots();
 //   }
@@ -126,4 +142,3 @@ class DatabaseService {
 //     });
 //   }
 //
-}
