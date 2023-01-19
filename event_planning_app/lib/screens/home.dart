@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
 import 'package:event_planning_app/screens/login.dart';
@@ -6,9 +7,11 @@ import 'package:event_planning_app/screens/register.dart';
 import 'package:event_planning_app/services/googlecalendar.dart';
 import 'package:event_planning_app/services/databaseService.dart';
 import 'package:event_planning_app/widgets/eventDetails.dart';
+import 'package:event_planning_app/widgets/eventTile.dart';
 import 'package:event_planning_app/widgets/productList.dart';
 
 import 'package:event_planning_app/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:event_planning_app/services/authServices.dart';
 
@@ -24,8 +27,11 @@ class _HomeState extends State<Home> {
 
   String userName = "";
   String email = "";
+  Stream? events;
   String dob = "";
   AuthService authService = AuthService();
+  DatabaseService databaseService =
+      DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
 
   @override
   void initState() {
@@ -172,7 +178,7 @@ class _HomeState extends State<Home> {
                         ),
                         child: IconButton(
                           onPressed: () {
-                            _eventURL();
+                            eventList();
                           },
                           icon: Icon(Icons.add),
                         ),
@@ -258,8 +264,8 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.all(15),
           child: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.2,
-                vertical: 5),
+                  horizontal: MediaQuery.of(context).size.width * 0.2,
+                  vertical: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -330,6 +336,7 @@ class _HomeState extends State<Home> {
         ));
   }
 
+// logout dialog box function
   logOut() {
     showDialog(
         barrierDismissible: false,
@@ -376,6 +383,7 @@ class _HomeState extends State<Home> {
         });
   }
 
+// add event popup (+) icon on app bar
   addEvent() {
     showDialog(
         barrierDismissible: false,
@@ -439,7 +447,6 @@ class _HomeState extends State<Home> {
           );
         });
   }
-
 
   _eventURL() {
     showDialog(
@@ -546,87 +553,126 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildRow(String imageAsset, String name, String subtitle) {
+  Widget _buildRow(String imageAsset, String event, String tag) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 10),
-          Container(height: 2, color: Colors.grey[100]),
-          SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  // For adding into the events
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.white10,
-                  backgroundImage: AssetImage(imageAsset),
-                ),
-              ),
-              SizedBox(width: 20),
-              Container(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          name,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "Lexend",
-                            fontWeight: FontWeight.w300,
-                            fontSize: 16,
-                          ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: AssetImage(imageAsset),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        event,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Lexend",
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        tag,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Lexend",
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                        ),
+                      ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(
-                          subtitle,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: "Lexend",
-                            fontWeight: FontWeight.w300,
-                            fontSize: 11,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
                 ],
-              )),
-              Spacer(),
+              ),
               GestureDetector(
                 onTap: () {
-                  // calls the function to edit the event
+                  Navigator.of(context).pop();
                 },
                 child: Container(
+                  height: 30,
+                  width: 30,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).primaryColor,
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  child: Image.asset(
-                    'assets/icons/edit.png',
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ],
           ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            height: 3,
+            color: Colors.black.withOpacity(0.8),
+          ),
         ],
       ),
+    );
+  }
+
+// the pop up in which our events will list out with the data fetching part
+  eventList() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: StreamBuilder(
+            stream: events,
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data['events'] != null) {
+                  if (snapshot.data['events'].length != 0) {
+                    return ListView.builder(
+                      itemCount: snapshot.data['events'].length,
+                      itemBuilder: (context, index) {
+                        return EventTile(
+                          eventTitle: snapshot.data["eventTitle"],
+                          eventTag: snapshot.data["eventTitle"],
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(child: Text("No events"));
+                  }
+                } else {
+                  return Center(child: Text("No events"));
+                }
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor),
+                );
+              }
+            },
+          ),
+        );
+      },
     );
   }
 }

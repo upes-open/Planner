@@ -60,135 +60,148 @@ class _ProfileState extends State<Profile> {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 30),
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage("assets/images/profilepic.png"),
-              backgroundColor: Colors.transparent,
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.black,
             ),
-            const SizedBox(
-              height: 54,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Full Name",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(8, 10, 0, 2),
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 234, 236, 240),
-                      blurRadius: 0,
-                      offset: Offset(0, 1),
-                    ),
-                  ]),
-                  child: Text(
-                    widget.userName,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                const Text(
-                  "Email ID",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(8, 10, 0, 2),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 234, 236, 240),
-                      blurRadius: 0,
-                      offset: Offset(0, 1),
-                    ),
-                  ]),
-                  child: Text(
-                    widget.email,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                const Text(
-                  "Date Of Birth",
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(8, 10, 0, 2),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 234, 236, 240),
-                      blurRadius: 0,
-                      offset: Offset(0, 1),
-                    ),
-                  ]),
-                  child: Text(
-                    widget.dob,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.1,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.04,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.1,
+              vertical: 30),
+          child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 70,
+                backgroundImage: AssetImage("assets/icons/index.png"),
+                backgroundColor: Colors.transparent,
               ),
-              child: GestureDetector(
-                onTap: () {
-                  //nextScreen(context, EditProfile());
-                },
-                child: Center(
-                  child: Text("Edit Profile",
+              const SizedBox(
+                height: 54,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Full Name",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 8),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 234, 236, 240),
+                        blurRadius: 0,
+                        offset: Offset(0, 1),
+                      ),
+                    ]),
+                    child: Text(
+                      widget.userName,
+                      textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 17,
-                        fontFamily: "Lexend",
-                        color: Colors.white,
-                      )),
-                ),
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const Text(
+                    "Email ID",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 8),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 234, 236, 240),
+                        blurRadius: 0,
+                        offset: Offset(0, 1),
+                      ),
+                    ]),
+                    child: Text(
+                      widget.email,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const Text(
+                    "Date Of Birth",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(8, 10, 0, 2),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 234, 236, 240),
+                        blurRadius: 0,
+                        offset: Offset(0, 1),
+                      ),
+                    ]),
+                    child: Text(
+                      widget.dob,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                height: MediaQuery.of(context).size.height * 0.04,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    //nextScreen(context, EditProfile());
+                  },
+                  child: Center(
+                    child: Text("Edit Profile",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: "Lexend",
+                          color: Colors.white,
+                        )),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
