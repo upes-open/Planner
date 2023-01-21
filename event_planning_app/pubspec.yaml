@@ -36,6 +36,11 @@ dependencies:
   firebase_core: ^2.4.1
   firebase_storage: ^11.0.10
   google_sign_in: ^5.4.2
+  connectivity_plus: ^3.0.2
+  flutter_facebook_auth: ^5.0.7
+  twitter_login: ^4.2.3
+  font_awesome_flutter: ^10.3.0
+  provider: ^6.0.5
   image_picker: ^0.8.6
   settings_ui: ^2.0.2
   shared_preferences: ^2.0.15
