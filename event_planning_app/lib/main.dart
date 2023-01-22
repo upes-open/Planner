@@ -1,5 +1,6 @@
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/screens/login.dart';
+import 'package:event_planning_app/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:event_planning_app/screens/home.dart';
@@ -49,12 +50,11 @@ class _MyAppState extends State<MyApp> {
 
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Event Planning App',
-      theme: ThemeData(
-        primaryColor: Constants.primaryColor,
-      ),
-      home: _isSignedIn ? const Home() : const Login(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Event Planning App',
+        theme: ThemeData(
+          primaryColor: Constants.primaryColor,
+        ),
+        home: SplashScreen());
   }
 }

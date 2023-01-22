@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   String email = "";
   String password = "";
   bool _isLoading = false;
+  bool _isGoogleSignedIn = false;
   AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -208,11 +209,12 @@ class _LoginState extends State<Login> {
                                 Container(
                                   padding: EdgeInsets.only(left: 88),
                                   child: GestureDetector(
-                                    onTap: () {
-                                      // authService
-                                      //     .signInWithGoogle(context)
-                                      //     .whenComplete(() => nextScreenReplace(
-                                      //         context, const Home()));
+                                    onTap: () async {
+                                      await authService.signInWithGoogle();
+                                      setState(() {
+                                        _isGoogleSignedIn = true;
+                                      });
+                                      nextScreen(context, const Home());
                                     },
                                     child: Image.asset(
                                       "assets/icons/google.png",

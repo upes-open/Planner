@@ -38,6 +38,14 @@ class DatabaseService {
       "isAllDay": isAllDay,
     });
   }
+
+  Future getEventDetails() async {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("events")
+        .snapshots();
+  }
 }
   //get event document id
 
