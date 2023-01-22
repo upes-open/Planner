@@ -4,6 +4,8 @@ import '../services/googlecalendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import 'addTag.dart';
+
 class WeekCalender extends StatefulWidget {
   const WeekCalender({Key? key}) : super(key: key);
   @override
@@ -81,10 +83,10 @@ class _WeekCalendarState extends State<WeekCalender> {
               child: Icon(Icons.pin_drop_rounded, color: Colors.white),
               label: 'Tag',
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => addTag()),
-                // );
+                showDialog(
+                    context: context,
+                    builder: (_) => addTag(),
+                    barrierDismissible: false);
               },
             )
           ],
@@ -169,7 +171,12 @@ class _MonthCalendarState extends State<MonthCalender> {
                 backgroundColor: Colors.brown,
                 child: Icon(Icons.pin_drop_rounded, color: Colors.white),
                 label: 'Tag',
-                onTap: () {})
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) => addTag(),
+                      barrierDismissible: false);
+                })
           ],
         ));
   }
