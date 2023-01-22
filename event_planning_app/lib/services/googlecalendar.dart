@@ -7,6 +7,7 @@ import 'package:googleapis/calendar/v3.dart' as googleAPI;
 import 'package:http/io_client.dart';
 import 'package:http/http.dart';
 import '../screens/AllCals.dart';
+import '../screens/addTag.dart';
 import '../screens/addevent.dart';
 
 class GoogleAPIClient extends IOClient {
@@ -198,6 +199,13 @@ class _CalendarState extends State<Calender> {
               backgroundColor: Colors.brown,
               child: Icon(Icons.pin_drop_rounded, color: Colors.white),
               label: 'Tag',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (_) => addTag(),
+                  barrierDismissible: false,
+                );
+              },
             )
           ],
         ));
