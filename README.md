@@ -32,8 +32,9 @@ This is an application that will be your one-stop for all your gifting, idea col
 - [x] Flutter
 - [x] Firebase
 
-### Flow of the application 
-![Untitled Notebook (2)-2](https://user-images.githubusercontent.com/89656488/195362448-b6ee6697-5098-460c-8b3d-fb06cf5eac64.jpg)
+### Glimpse of the project
+![cold, smooth   tasty  (1)](https://user-images.githubusercontent.com/89656488/214358535-1be33fa5-39bc-44e6-8847-a5331b52f28a.png)
+
 
 ### Workflow of the project 
 <img width="225" alt="Screenshot 2022-10-12 at 19 33 18" src="https://user-images.githubusercontent.com/89656488/195364220-a6d72955-3554-406b-92b8-b0c4788ec952.png">
