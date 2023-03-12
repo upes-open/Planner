@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/addevent.dart';
+
 import '../services/googlecalendar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -72,10 +72,10 @@ class _WeekCalendarState extends State<WeekCalender> {
               child: Icon(Icons.task, color: Colors.white),
               label: 'Event',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => addevent()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => addevent()),
+                // );
               },
             ),
             SpeedDialChild(
@@ -161,10 +161,10 @@ class _MonthCalendarState extends State<MonthCalender> {
               child: Icon(Icons.task, color: Colors.white),
               label: 'Event',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => addevent()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => addevent()),
+                // );
               },
             ),
             SpeedDialChild(

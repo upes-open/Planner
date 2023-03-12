@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
+import 'package:event_planning_app/models/eventListModel.dart';
 import 'package:event_planning_app/screens/login.dart';
 import 'package:event_planning_app/screens/profile.dart';
 import 'package:event_planning_app/screens/register.dart';
@@ -27,8 +28,14 @@ class _HomeState extends State<Home> {
 
   String userName = "";
   String email = "";
-  Stream? events;
+  // Stream? events;
   String dob = "";
+  List eventNames = [];
+  List eventStartDates = [];
+  List eventEndDates = [];
+  List eventStartTimes = [];
+  List eventEndTimes = [];
+  List eventTags = [];
   AuthService authService = AuthService();
   DatabaseService databaseService =
       DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
@@ -49,19 +56,35 @@ class _HomeState extends State<Home> {
   }
 
   gettingUserData() async {
-    await HelperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
+    await HelperFunctions.getUserEmailFromSF().then((value) => email = value!);
+    // await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+    //     .getEventDetails(FirebaseAuth.instance.currentUser!.uid)
+    //     .then((value) {
+    //   setState(() {
+    //     eventNames = value.docs.map((e) => e["eventTitle"]).toList();
+    //     eventTimes = value.docs.map((e) => e["startTime"]).toList();
+    //   });
+    // });
+    var events = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("events")
+        .get();
+    setState(() {
+      eventNames = events.docs;
+      eventStartDates = events.docs;
+      eventEndDates = events.docs;
+      eventStartTimes = events.docs;
+      eventEndTimes = events.docs;
+      eventTags = events.docs;
     });
-    await HelperFunctions.getUserNamefromSF().then((val) {
+
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getUserData(email)
+        .then((value) {
       setState(() {
-        userName = val!;
-      });
-    });
-    await HelperFunctions.getUserDOB().then((val) {
-      setState(() {
-        dob = val!;
+        userName = value.docs[0]["fullName"];
+        dob = value.docs[0]["dob"];
       });
     });
   }
@@ -179,6 +202,8 @@ class _HomeState extends State<Home> {
                         child: IconButton(
                           onPressed: () {
                             eventList();
+                            print(eventNames);
+                            print(eventTags);
                           },
                           icon: Icon(Icons.add),
                         ),
@@ -448,230 +473,29 @@ class _HomeState extends State<Home> {
         });
   }
 
-  _eventURL() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          elevation: 20,
-          child: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              SizedBox(height: 20),
-              Center(
-                  child: Text(
-                'Your Events',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: "Lexend",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              )),
-              SizedBox(height: 20),
-              _buildRow('assets/images/event1.png', 'Event 1',
-                  'Description of the event'),
-              _buildRow('assets/images/event2.png', 'Event 2',
-                  'Description of the event'),
-              _buildRow('assets/images/event3.png', 'Event 3',
-                  'Description of the event'),
-              _buildRow('assets/images/general.png', 'General',
-                  'Just all unfiltered ideas'),
-              SizedBox(
-                height: 10,
-                width: 10,
-              ),
-              Container(
-                padding: EdgeInsets.all(5),
-                color: Theme.of(context).primaryColor,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Center(
-                            child: Text(
-                              "Add to Tags",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontFamily: "Lexend",
-                                fontWeight: FontWeight.w300,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Center(
-                            child: Text(
-                              "Add to Events",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Lexend",
-                                fontWeight: FontWeight.w300,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildRow(String imageAsset, String event, String tag) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(imageAsset),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        event,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Lexend",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        tag,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Lexend",
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Divider(
-            height: 3,
-            color: Colors.black.withOpacity(0.8),
-          ),
-        ],
-      ),
-    );
-  }
-
 // the pop up in which our events will list out with the data fetching part
   eventList() {
     return showDialog(
       context: context,
       builder: (context) {
+        Size size = MediaQuery.of(context).size;
         return Dialog(
-          child: StreamBuilder(
-            stream: events,
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data['events'] != null) {
-                  if (snapshot.data['events'].length != 0) {
-                    return ListView.builder(
-                      itemCount: snapshot.data['events'].length,
-                      itemBuilder: (context, index) {
-                        return EventTile(
-                          eventTitle: snapshot.data["eventTitle"],
-                          eventTag: snapshot.data["eventTitle"],
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(child: Text("No events"));
-                  }
-                } else {
-                  return Center(child: Text("No events"));
-                }
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor),
+            child: Container(
+          height: size.height * 0.5,
+          padding: EdgeInsets.all(size.width * 0.05),
+          child: Expanded(
+            child: ListView.builder(
+              itemCount: eventNames.length,
+              itemBuilder: (context, index) {
+                return EventListModel(
+                  eventTitle: eventNames[index].data()['eventTitle'],
+                  eventStartDate: eventStartDates[index].data()['startDate'],
+                  tag: eventTags[index].data()['eventTag'],
                 );
-              }
-            },
+              },
+            ),
           ),
-        );
+        ));
       },
     );
   }

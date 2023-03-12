@@ -5,7 +5,7 @@ import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/services/authServices.dart';
 import 'package:event_planning_app/services/databaseService.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 import 'package:event_planning_app/screens/register.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +22,7 @@ class _LoginState extends State<Login> {
   String email = "";
   String password = "";
   bool _isLoading = false;
+  bool _isGoogleSignedIn = false;
   AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -208,11 +209,12 @@ class _LoginState extends State<Login> {
                                 Container(
                                   padding: EdgeInsets.only(left: 88),
                                   child: GestureDetector(
-                                    onTap: () {
-                                      // authService
-                                      //     .signInWithGoogle(context)
-                                      //     .whenComplete(() => nextScreenReplace(
-                                      //         context, const Home()));
+                                    onTap: () async {
+                                      // await authService.signInWithGoogle();
+                                      // setState(() {
+                                      //   _isGoogleSignedIn = true;
+                                      // });
+                                      // nextScreen(context, const Home());
                                     },
                                     child: Image.asset(
                                       "assets/icons/google.png",

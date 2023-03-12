@@ -22,6 +22,7 @@ class _addTagState extends State<addTag> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 20,
@@ -32,14 +33,14 @@ class _addTagState extends State<addTag> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 18),
+                padding: EdgeInsets.only(left: size.width * 0.05),
                 child: Text(
                   'New Tag',
                   style: TextStyle(
                     color: Colors.brown,
                     fontFamily: "Lexend",
                     fontWeight: FontWeight.w300,
-                    fontSize: 30,
+                    fontSize: size.width * 0.06,
                   ),
                 ),
               ),
@@ -54,7 +55,8 @@ class _addTagState extends State<addTag> {
           ),
           SizedBox(height: 5),
           Container(
-            padding: EdgeInsets.only(left: 25, right: 25),
+            padding: EdgeInsets.only(
+                left: size.width * 0.05, right: size.width * 0.05),
             width: MediaQuery.of(context).size.width * 0.5,
             child: TextFormField(
               controller: tag,
@@ -76,7 +78,7 @@ class _addTagState extends State<addTag> {
                   color: Colors.grey,
                   fontFamily: "Lexend",
                   fontWeight: FontWeight.w300,
-                  fontSize: 20,
+                  fontSize: size.width * 0.04,
                 ),
               ),
               style: TextStyle(
@@ -96,7 +98,7 @@ class _addTagState extends State<addTag> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 25),
+                      padding: EdgeInsets.only(left: size.width * 0.05),
                       child: Row(
                         children: [
                           Text(
@@ -105,7 +107,7 @@ class _addTagState extends State<addTag> {
                               color: Colors.brown,
                               fontFamily: "Lexend",
                               fontWeight: FontWeight.w100,
-                              fontSize: 15,
+                              fontSize: size.width * 0.04,
                             ),
                           ),
                         ],
@@ -113,52 +115,55 @@ class _addTagState extends State<addTag> {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        color = "red";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.red, size: 15),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        color = "yellow";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.yellow, size: 15),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        color = "blue";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.blue, size: 15),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        color = "orange";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.orange, size: 15),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        color = "pink";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.pink, size: 15),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        color = "green";
-                      },
-                      icon: Icon(Icons.radio_button_checked,
-                          color: Colors.green, size: 15),
-                    ),
-                  ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      IconButton(
+                        onPressed: () {
+                          color = "red";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.red, size: 15),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          color = "yellow";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.yellow, size: 15),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          color = "blue";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.blue, size: 15),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          color = "orange";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.orange, size: 15),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          color = "pink";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.pink, size: 15),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          color = "green";
+                        },
+                        icon: Icon(Icons.radio_button_checked,
+                            color: Colors.green, size: 15),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
