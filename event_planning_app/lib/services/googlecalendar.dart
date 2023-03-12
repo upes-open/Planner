@@ -1,3 +1,4 @@
+import 'package:event_planning_app/screens/addEvents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,7 +9,6 @@ import 'package:http/io_client.dart';
 import 'package:http/http.dart';
 import '../screens/AllCals.dart';
 import '../screens/addTag.dart';
-import '../screens/addevent.dart';
 
 class GoogleAPIClient extends IOClient {
   Map<String, String> _headers;
@@ -191,7 +191,7 @@ class _CalendarState extends State<Calender> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => addevent()),
+                  MaterialPageRoute(builder: (context) => AddEvents()),
                 );
               },
             ),

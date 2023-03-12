@@ -30,21 +30,31 @@ class DatabaseService {
   }
 
   Future saveEventDetails(
-      String eventTitle, DateTime startTime, DateTime endTime, bool isAllDay) {
+      String eventTitle,
+      String description,
+      String startDate,
+      String startTime,
+      String endDate,
+      String endTime,
+      String eventTag) {
     return userCollection.doc(uid).collection("events").add({
       "eventTitle": eventTitle,
+      "description": description,
+      "startDate": startDate,
       "startTime": startTime,
+      "endDate": endDate,
       "endTime": endTime,
-      "isAllDay": isAllDay,
+      "eventTag": eventTag
     });
   }
 
-  Future getEventDetails() async {
-    return FirebaseFirestore.instance
-        .collection("users")
+  Future getEventDetails(String uid) async {
+    QuerySnapshot snapshot = await userCollection
         .doc(uid)
         .collection("events")
-        .snapshots();
+        .orderBy("startTime")
+        .get();
+    return snapshot;
   }
 }
   //get event document id

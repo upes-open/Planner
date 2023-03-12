@@ -4,7 +4,7 @@ import '../widgets/widgets.dart';
 import 'package:event_planning_app/services/authServices.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
 import 'package:event_planning_app/constants/constants.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 import 'package:event_planning_app/screens/login.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +16,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController dateController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _isChecked = false;
@@ -166,24 +167,56 @@ class _RegisterState extends State<Register> {
                           const SizedBox(
                             height: 15,
                           ),
-                          TextFormField(
-                              keyboardType: TextInputType.datetime,
-                              maxLength: 10,
-                              style: TextStyle(
-                                color: Colors.black,
+                          TextField(
+                            controller:
+                                dateController, //editing controller of this TextField
+                            decoration: InputDecoration(
+                              hintText: "Enter Date of Birth",
+                              hintStyle: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.045,
+                                fontWeight: FontWeight.w400,
                                 fontFamily: "Lexend",
+                                color: Colors.black,
                               ),
-                              decoration: textInputDecoration.copyWith(
-                                  labelText: "Date of Birth",
-                                  prefixIcon: Icon(
-                                    Icons.calendar_today,
-                                    color: Colors.black,
-                                  )),
-                              onChanged: (val) {
+                              prefixIcon: Icon(Icons.calendar_today),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 2),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.black, width: 2),
+                              ),
+                              errorBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.red, width: 2),
+                              ),
+                            ),
+                            readOnly: true, // when true user cannot edit text
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate:
+                                      DateTime.now(), //get today's date
+                                  firstDate: DateTime(
+                                      2000), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime(2101));
+
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('dd-MM-yyyy').format(pickedDate);
+
                                 setState(() {
-                                  dob = val;
+                                  dateController.text = formattedDate;
+                                  dob = dateController.text;
                                 });
-                              }),
+                              } else {
+                                showSnackBar(context, Colors.red,
+                                    "Date is not selected");
+                              }
+                            },
+                          ),
 
                           Row(
                             children: [

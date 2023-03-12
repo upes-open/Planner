@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planning_app/screens/Login.dart';
 //import 'package:event_planning_app/screens/editProfile.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 import 'package:event_planning_app/services/authServices.dart';
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';

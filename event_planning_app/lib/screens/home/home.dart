@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
+import 'package:event_planning_app/models/eventListModel.dart';
 import 'package:event_planning_app/screens/login.dart';
 import 'package:event_planning_app/screens/profile.dart';
 import 'package:event_planning_app/screens/register.dart';
@@ -27,8 +28,14 @@ class _HomeState extends State<Home> {
 
   String userName = "";
   String email = "";
-  Stream? events;
+  // Stream? events;
   String dob = "";
+  List eventNames = [];
+  List eventStartDates = [];
+  List eventEndDates = [];
+  List eventStartTimes = [];
+  List eventEndTimes = [];
+  List eventTags = [];
   AuthService authService = AuthService();
   DatabaseService databaseService =
       DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid);
@@ -49,19 +56,35 @@ class _HomeState extends State<Home> {
   }
 
   gettingUserData() async {
-    await HelperFunctions.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
+    await HelperFunctions.getUserEmailFromSF().then((value) => email = value!);
+    // await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+    //     .getEventDetails(FirebaseAuth.instance.currentUser!.uid)
+    //     .then((value) {
+    //   setState(() {
+    //     eventNames = value.docs.map((e) => e["eventTitle"]).toList();
+    //     eventTimes = value.docs.map((e) => e["startTime"]).toList();
+    //   });
+    // });
+    var events = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("events")
+        .get();
+    setState(() {
+      eventNames = events.docs;
+      eventStartDates = events.docs;
+      eventEndDates = events.docs;
+      eventStartTimes = events.docs;
+      eventEndTimes = events.docs;
+      eventTags = events.docs;
     });
-    await HelperFunctions.getUserNamefromSF().then((val) {
+
+    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getUserData(email)
+        .then((value) {
       setState(() {
-        userName = val!;
-      });
-    });
-    await HelperFunctions.getUserDOB().then((val) {
-      setState(() {
-        dob = val!;
+        userName = value.docs[0]["fullName"];
+        dob = value.docs[0]["dob"];
       });
     });
   }
@@ -179,6 +202,8 @@ class _HomeState extends State<Home> {
                         child: IconButton(
                           onPressed: () {
                             eventList();
+                            print(eventNames);
+                            print(eventTags);
                           },
                           icon: Icon(Icons.add),
                         ),
@@ -641,37 +666,24 @@ class _HomeState extends State<Home> {
     return showDialog(
       context: context,
       builder: (context) {
+        Size size = MediaQuery.of(context).size;
         return Dialog(
-          child: StreamBuilder(
-            stream: events,
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data['events'] != null) {
-                  if (snapshot.data['events'].length != 0) {
-                    return ListView.builder(
-                      itemCount: snapshot.data['events'].length,
-                      itemBuilder: (context, index) {
-                        return EventTile(
-                          eventTitle: snapshot.data["eventTitle"],
-                          eventTag: snapshot.data["eventTitle"],
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(child: Text("No events"));
-                  }
-                } else {
-                  return Center(child: Text("No events"));
-                }
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor),
+            child: Container(
+          height: size.height * 0.5,
+          padding: EdgeInsets.all(size.width * 0.05),
+          child: Expanded(
+            child: ListView.builder(
+              itemCount: eventNames.length,
+              itemBuilder: (context, index) {
+                return EventListModel(
+                  eventTitle: eventNames[index].data()['eventTitle'],
+                  eventStartDate: eventStartDates[index].data()['startDate'],
+                  tag: eventTags[index].data()['eventTag'],
                 );
-              }
-            },
+              },
+            ),
           ),
-        );
+        ));
       },
     );
   }

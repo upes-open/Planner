@@ -5,7 +5,7 @@ import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/services/authServices.dart';
 import 'package:event_planning_app/services/databaseService.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 import 'package:event_planning_app/screens/register.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -210,11 +210,11 @@ class _LoginState extends State<Login> {
                                   padding: EdgeInsets.only(left: 88),
                                   child: GestureDetector(
                                     onTap: () async {
-                                      await authService.signInWithGoogle();
-                                      setState(() {
-                                        _isGoogleSignedIn = true;
-                                      });
-                                      nextScreen(context, const Home());
+                                      // await authService.signInWithGoogle();
+                                      // setState(() {
+                                      //   _isGoogleSignedIn = true;
+                                      // });
+                                      // nextScreen(context, const Home());
                                     },
                                     child: Image.asset(
                                       "assets/icons/google.png",

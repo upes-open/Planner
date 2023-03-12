@@ -55,24 +55,24 @@ class AuthService {
     }
   }
 
-  Future signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await googleSignIn.signIn();
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleSignInAuthentication.accessToken,
-          idToken: googleSignInAuthentication.idToken,
-        );
-        await firebaseAuth.signInWithCredential(credential);
-      }
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      throw e;
-    }
-  }
+  // Future signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await googleSignIn.signIn();
+  //     if (googleSignInAccount != null) {
+  //       final GoogleSignInAuthentication googleSignInAuthentication =
+  //           await googleSignInAccount.authentication;
+  //       final AuthCredential credential = GoogleAuthProvider.credential(
+  //         accessToken: googleSignInAuthentication.accessToken,
+  //         idToken: googleSignInAuthentication.idToken,
+  //       );
+  //       await firebaseAuth.signInWithCredential(credential);
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     print(e.message);
+  //     throw e;
+  //   }
+  // }
 
   googleSignOut() async {
     await firebaseAuth.signOut();

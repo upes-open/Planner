@@ -1,6 +1,6 @@
 import 'package:event_planning_app/constants/constants.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 import 'package:event_planning_app/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

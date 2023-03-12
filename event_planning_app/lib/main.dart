@@ -3,7 +3,7 @@ import 'package:event_planning_app/screens/login.dart';
 import 'package:event_planning_app/screens/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:event_planning_app/screens/home.dart';
+import 'package:event_planning_app/screens/home/home.dart';
 //import 'package:event_planning_app/screens/onBoard.dart';
 import 'package:event_planning_app/helper/helperFunctions.dart';
 import 'package:firebase_core/firebase_core.dart';
